@@ -20,6 +20,8 @@ public class Product {
 
     @Column(name = "date")
     private String date;
+
+    //без него эластик не работает(
     private String stringId;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "product", cascade = CascadeType.ALL)
     private List<SKU> skus;
