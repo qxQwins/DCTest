@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+</head>
+<body>
+<form action="/search" method="post">
+    <label>
+        <input type="text" name="request"> <button type="submit">Поиск</button>
+    </label>
+    <table>
+        <tr>
+            <th>Номер</th>
+            <th>Имя</th>
+            <th>Дата</th>
+            <th>СКУ</th>
+        </tr>
+        <tr th:each="p : ${products}">
+            <td><span th:text="${p.id}"></span></a></td>
+            <td><span th:text="${p.name}"></span></td>
+            <td><span th:text="${p.date}"></span></td>
+            <td ><p th:each="s : ${p.skus}" th:text="'Номер: ' + ${s.price} + ' '
+             + 'Артикул: ' + ${s.article} + ' '
+             + 'Цена: ' + ${s.price} + ' '
+             + 'Статус: ' + ${s.status} "><br></p></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
