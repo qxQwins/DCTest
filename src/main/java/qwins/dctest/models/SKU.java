@@ -1,17 +1,22 @@
 package qwins.dctest.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity
+@Table(name = "sku")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
 public class SKU {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sku_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
     private Product product;
 
@@ -23,6 +28,16 @@ public class SKU {
 
     @Column(name = "status")
     private String status;
+
+    public SKU() {
+    }
+
+    public SKU(Long id, int price, int article, String status) {
+        this.id = id;
+        this.price = price;
+        this.article = article;
+        this.status = status;
+    }
 
     public Long getId() {
         return id;
@@ -68,7 +83,6 @@ public class SKU {
     public String toString() {
         return "SKU{" +
                 "id=" + id +
-                ", product=" + product +
                 ", price=" + price +
                 ", article=" + article +
                 ", status='" + status + '\'' +

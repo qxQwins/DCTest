@@ -1,13 +1,15 @@
 package qwins.dctest.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import org.hibernate.annotations.Fetch;
 
 import java.util.List;
 import java.util.Objects;
 
-@Entity(name = "products")
-
+@Entity
+@Table(name = "products")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,9 +20,18 @@ public class Product {
 
     @Column(name = "date")
     private String date;
-
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    private String stringId;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product", cascade = CascadeType.ALL)
     private List<SKU> skus;
+
+    public Product() {
+    }
+
+    public Product(Long id, String name, String date) {
+        this.id = id;
+        this.name = name;
+        this.date = date;
+    }
 
     public List<SKU> getSkus() {
         return skus;
@@ -30,10 +41,12 @@ public class Product {
         this.skus = skus;
     }
 
+    public String getStringId() {
+        return String.valueOf(id);
+    }
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -60,7 +73,6 @@ public class Product {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", date='" + date + '\'' +
-                ", skus=" + skus +
                 "}\n";
     }
 

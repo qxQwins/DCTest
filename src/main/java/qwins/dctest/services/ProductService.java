@@ -20,7 +20,7 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> findAll() {
+    public List<Product> getAllProducts() {
         List<Product> products = productRepository.findAll();
         for (Product product : products) {
             Hibernate.initialize(product.getSkus().size());
